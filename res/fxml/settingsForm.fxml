@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0"
+         prefWidth="546.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="kz.sdauka.ormanager.controllers.SettingCTRL">
+    <tabs>
+        <Tab text="Общие настройки">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="546.0">
+                    <children>
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="14.0"
+                                    prefHeight="108.0" prefWidth="518.0" text="Изменение пароля">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="516.0">
+                                    <children>
+                                        <Label layoutX="14.0" layoutY="14.0" text="Пароль"/>
+                                        <PasswordField fx:id="password" layoutX="12.0" layoutY="31.0" prefHeight="25.0"
+                                                       prefWidth="168.0"/>
+                                        <Label layoutX="205.0" layoutY="14.0" text="Подтвредить"/>
+                                        <PasswordField fx:id="rePassword" layoutX="205.0" layoutY="31.0"
+                                                       prefHeight="25.0" prefWidth="168.0"/>
+                                        <Button defaultButton="true" layoutX="407.0" layoutY="31.0"
+                                                mnemonicParsing="false" onAction="#savePasswordAction" prefHeight="25.0"
+                                                prefWidth="95.0" text="Сохранить"/>
+                                        <Label fx:id="passwordLbl" layoutX="12.0" layoutY="60.0" textFill="#d30f02"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="140.0"
+                                    prefHeight="130.0" prefWidth="518.0" text="Настройка ограничений оператора">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="109.0" prefWidth="516.0">
+                                    <children>
+                                        <CheckBox fx:id="hideTaskBar" layoutX="14.0" layoutY="14.0"
+                                                  mnemonicParsing="false" text="Скрыть панель задач"/>
+                                        <CheckBox fx:id="disableTaskManager" layoutX="14.0" layoutY="44.0"
+                                                  mnemonicParsing="false" text="Отключить диспетчер задач"/>
+                                        <CheckBox fx:id="disableAltF4" layoutX="14.0" layoutY="73.0"
+                                                  mnemonicParsing="false" text="Отключить Alt+F4"/>
+                                        <CheckBox fx:id="disableAltTab" layoutX="210.0" layoutY="14.0"
+                                                  mnemonicParsing="false" text="Отключить Alt+Tab"/>
+                                        <CheckBox fx:id="disableWin" layoutX="210.0" layoutY="44.0"
+                                                  mnemonicParsing="false" text="Отключить кнопка Windows"/>
+                                        <Button defaultButton="true" layoutX="407.0" layoutY="69.0"
+                                                mnemonicParsing="false" onAction="#saveAccessRights" prefHeight="25.0"
+                                                prefWidth="95.0" text="Сохранить"/>
+                                        <Label fx:id="accessRightsLbl" layoutX="210.0" layoutY="73.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="12.0" layoutY="286.0"
+                                    prefHeight="206.0" prefWidth="522.0" text="Настройка почты">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="178.0" prefWidth="520.0">
+                                    <children>
+                                        <Label layoutX="14.0" layoutY="122.0" text="SMTP-сервер"/>
+                                        <TextField fx:id="emailAdresat" layoutX="14.0" layoutY="36.0" prefHeight="25.0"
+                                                   prefWidth="190.0"/>
+                                        <Label layoutX="219.0" layoutY="122.0" text="Порт"/>
+                                        <TextField fx:id="port" layoutX="219.0" layoutY="143.0"/>
+                                        <Label layoutX="14.0" layoutY="67.0" text="Email отправителя"/>
+                                        <Label layoutX="219.0" layoutY="67.0" text="Пароль"/>
+                                        <TextField fx:id="emailPassword" layoutX="219.0" layoutY="91.0"/>
+                                        <TextField fx:id="emailSender" layoutX="14.0" layoutY="91.0" prefHeight="25.0"
+                                                   prefWidth="190.0"/>
+                                        <TextField fx:id="smtp" layoutX="14.0" layoutY="143.0" prefHeight="25.0"
+                                                   prefWidth="190.0"/>
+                                        <Label layoutX="14.0" layoutY="15.0" text="Email получателя"/>
+                                        <Button defaultButton="true" layoutX="411.0" layoutY="143.0"
+                                                mnemonicParsing="false" onAction="#saveEmailSettings" prefHeight="25.0"
+                                                prefWidth="95.0" text="Сохранить"/>
+                                        <CheckBox fx:id="openNotification" layoutX="219.0" layoutY="15.0"
+                                                  mnemonicParsing="false"
+                                                  text="Отправка уведомлении об открытии сессии"/>
+                                        <CheckBox fx:id="closeNotification" layoutX="219.0" layoutY="40.0"
+                                                  mnemonicParsing="false"
+                                                  text="Отправка уведомлении об закрытии сессии"/>
+                                        <Label fx:id="emailLbl" layoutX="411.0" layoutY="122.0"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Операторы">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <children>
+                        <ToolBar prefHeight="41.0" prefWidth="546.0">
+                            <items>
+                                <Button fx:id="addOperatorBtn" mnemonicParsing="false" onAction="#handleNewOperator"/>
+                                <Button fx:id="editOperatorBtn" mnemonicParsing="false" onAction="#handleEditOperator"/>
+                                <Button fx:id="deleteOperatorBtn" mnemonicParsing="false"
+                                        onAction="#handleDeleteOperator"/>
+                            </items>
+                        </ToolBar>
+                        <TableView fx:id="operatorsTable" layoutY="40.0" prefHeight="473.0" prefWidth="546.0">
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            </columnResizePolicy>
+                            <columns>
+                                <TableColumn fx:id="idOperators" prefWidth="31.0" resizable="false" text="№"/>
+                                <TableColumn fx:id="nameOperators" prefWidth="241.0" text="Имя"/>
+                                <TableColumn fx:id="loginOperators" prefWidth="75.0" text="Логин"/>
+                                <TableColumn fx:id="passwordOperators" prefWidth="75.0" text="Пароль"/>
+                            </columns>
+                        </TableView>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Игры">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="337.0">
+                    <children>
+                        <TableView fx:id="gamesTable" layoutY="40.0" prefHeight="474.0" prefWidth="546.0">
+                            <columns>
+                                <TableColumn fx:id="idGames" prefWidth="40.0" text="ID"/>
+                                <TableColumn fx:id="nameGames" prefWidth="116.0" text="Название"/>
+                                <TableColumn fx:id="pathGames" prefWidth="66.0" text="Путь"/>
+                                <TableColumn fx:id="imageGames" prefWidth="70.0" text="Картинка"/>
+                                <TableColumn fx:id="attributeGames" prefWidth="103.0" text="Параметры запуска"/>
+                                <TableColumn fx:id="timeGames" prefWidth="52.0" text="Время"/>
+                                <TableColumn fx:id="costGames" prefWidth="75.0" text="Цена"/>
+                            </columns>
+                        </TableView>
+                        <ToolBar prefHeight="41.0" prefWidth="546.0">
+                            <items>
+                                <Button fx:id="addGameBtn1" mnemonicParsing="false" onAction="#handleNewGame"/>
+                                <Button fx:id="editGameBtn1" mnemonicParsing="false" onAction="#handleEditGame"/>
+                                <Button fx:id="deleteGameBtn1" mnemonicParsing="false" onAction="#handleDeleteGame"/>
+                            </items>
+                        </ToolBar>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+        <Tab text="Отчеты">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="337.0">
+                    <children>
+                        <ToolBar prefHeight="40.0" prefWidth="546.0">
+                            <items>
+                                <Label text="Период"/>
+                                <DatePicker/>
+                                <Label text="-"/>
+                                <DatePicker/>
+                                <Button fx:id="searchBtn" mnemonicParsing="false" text="Поиск"/>
+                            </items>
+                        </ToolBar>
+                        <TitledPane animated="false" collapsible="false" layoutY="40.0" prefHeight="176.0"
+                                    prefWidth="546.0" text="Сессии">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                            </content>
+                        </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutY="216.0" prefHeight="257.0"
+                                    prefWidth="546.0" text="Игры">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="544.0"/>
+                            </content>
+                        </TitledPane>
+                        <ToolBar layoutY="473.0" prefHeight="32.0" prefWidth="546.0">
+                            <items>
+                                <Button fx:id="reportExcelBtn" mnemonicParsing="false" text="Вывод в Excel"/>
+                            </items>
+                        </ToolBar>
+                    </children>
+                </AnchorPane>
+            </content>
+        </Tab>
+    </tabs>
+</TabPane>

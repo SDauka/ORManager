@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="242.0"
+      prefWidth="368.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="kz.sdauka.ormanager.controllers.GamesEditDialogCTRL">
+    <children>
+        <Button defaultButton="true" layoutX="211.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleOK"
+                prefHeight="25.0" prefWidth="53.0" text="OK"/>
+        <Button cancelButton="true" layoutX="274.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleCancel"
+                prefHeight="25.0" prefWidth="72.0" text="Отмена"/>
+        <Label layoutX="25.0" layoutY="14.0" text="Название"/>
+        <TextField fx:id="gameName" layoutX="23.0" layoutY="37.0"/>
+        <Label layoutX="189.0" layoutY="73.0" text="Путь к игре"/>
+        <Label layoutX="189.0" layoutY="14.0" text="Путь к картинке"/>
+        <Label layoutX="23.0" layoutY="73.0" text="Параметры запуска"/>
+        <Label layoutX="26.0" layoutY="130.0" text="Время игры мин."/>
+        <Label layoutX="189.0" layoutY="130.0" text="Цена тг."/>
+        <TextField fx:id="gameImagePath" layoutX="189.0" layoutY="37.0" prefHeight="25.0" prefWidth="122.0"/>
+        <Button layoutX="311.0" layoutY="37.0" mnemonicParsing="false" onAction="#handleImagePath" prefHeight="25.0"
+                prefWidth="35.0" text="..."/>
+        <TextField fx:id="gameAttribute" layoutX="23.0" layoutY="90.0"/>
+        <TextField fx:id="gamePath" layoutX="189.0" layoutY="90.0" prefHeight="25.0" prefWidth="122.0"/>
+        <Button layoutX="311.0" layoutY="90.0" mnemonicParsing="false" onAction="#handleGamePath" prefHeight="25.0"
+                prefWidth="35.0" text="..."/>
+        <TextField fx:id="gameTime" layoutX="23.0" layoutY="153.0" prefHeight="25.0" prefWidth="149.0"/>
+        <TextField fx:id="gameCost" layoutX="189.0" layoutY="153.0" prefHeight="25.0" prefWidth="63.0"/>
+        <Label fx:id="errorLabel" layoutX="23.0" layoutY="204.0"/>
+    </children>
+</Pane>
