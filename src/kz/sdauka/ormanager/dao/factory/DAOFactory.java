@@ -3,9 +3,11 @@ package kz.sdauka.ormanager.dao.factory;
 import kz.sdauka.ormanager.dao.AdminDAO;
 import kz.sdauka.ormanager.dao.GamesDAO;
 import kz.sdauka.ormanager.dao.OperatorsDAO;
+import kz.sdauka.ormanager.dao.SessionDAO;
 import kz.sdauka.ormanager.dao.impl.AdminDAOImpl;
 import kz.sdauka.ormanager.dao.impl.GamesDAOImpl;
 import kz.sdauka.ormanager.dao.impl.OperatorsDAOImpl;
+import kz.sdauka.ormanager.dao.impl.SessionDAOImpl;
 
 /**
  * Created by Dauletkhan on 10.01.2015.
@@ -15,6 +17,7 @@ public class DAOFactory {
     private static AdminDAO adminDAO = null;
     private static OperatorsDAO operatorsDAO = null;
     private static GamesDAO gamesDAO = null;
+    private static SessionDAO sessionDAO = null;
     private static DAOFactory instance = null;
 
     public static synchronized DAOFactory getInstance() {
@@ -29,6 +32,13 @@ public class DAOFactory {
             gamesDAO = new GamesDAOImpl();
         }
         return gamesDAO;
+    }
+
+    public SessionDAO getSessionDAO() {
+        if (sessionDAO == null) {
+            sessionDAO = new SessionDAOImpl();
+        }
+        return sessionDAO;
     }
 
     public OperatorsDAO getOperatorsDAO() {

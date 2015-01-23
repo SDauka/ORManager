@@ -25,9 +25,7 @@ public class IniFileUtil {
             Wini wini = new Wini(new File(filePath));
             wini.put("Access Rights", "hideTaskBar", "true");
             wini.put("Access Rights", "disableTaskManager", "true");
-            wini.put("Access Rights", "disableAltF4", "true");
-            wini.put("Access Rights", "disableAltTab", "true");
-            wini.put("Access Rights", "disableWin", "true");
+            wini.put("Access Rights", "disableKeys", "true");
             wini.put("Email settings", "openNotification", "true");
             wini.put("Email settings", "closeNotification", "true");
             wini.put("Email settings", "emailAdresat", "s.dauka@bk.ru");
@@ -51,9 +49,7 @@ public class IniFileUtil {
             Wini wini = new Wini(new File(filePath));
             setting1.setHideTaskBar(Boolean.parseBoolean(wini.get("Access Rights", "hideTaskBar")));
             setting1.setDisableTaskManager(Boolean.parseBoolean(wini.get("Access Rights", "disableTaskManager")));
-            setting1.setDisableAltF4(Boolean.parseBoolean(wini.get("Access Rights", "disableAltF4")));
-            setting1.setDisableAltTab(Boolean.parseBoolean(wini.get("Access Rights", "disableAltTab")));
-            setting1.setDisableWin(Boolean.parseBoolean(wini.get("Access Rights", "disableWin")));
+            setting1.setDisableKeys(Boolean.parseBoolean(wini.get("Access Rights", "disableKeys")));
             setting1.setOpenNotification(Boolean.parseBoolean(wini.get("Email settings", "openNotification")));
             setting1.setCloseNotification(Boolean.parseBoolean(wini.get("Email settings", "closeNotification")));
             setting1.setEmailAdresat(wini.get("Email settings", "emailAdresat"));

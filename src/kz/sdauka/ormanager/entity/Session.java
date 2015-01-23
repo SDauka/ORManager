@@ -15,7 +15,6 @@ public class Session {
     private Timestamp stopTime;
     private int countStart;
     private int sum;
-    private String status;
     private Operator operatorByOperator;
 
     @Id
@@ -79,15 +78,6 @@ public class Session {
         this.sum = sum;
     }
 
-    @Basic
-    @Column(name = "STATUS", nullable = false, insertable = true, updatable = true, length = 2147483647)
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -101,7 +91,6 @@ public class Session {
         if (sum != session.sum) return false;
         if (day != null ? !day.equals(session.day) : session.day != null) return false;
         if (startTime != null ? !startTime.equals(session.startTime) : session.startTime != null) return false;
-        if (status != null ? !status.equals(session.status) : session.status != null) return false;
         if (stopTime != null ? !stopTime.equals(session.stopTime) : session.stopTime != null) return false;
 
         return true;
@@ -115,7 +104,6 @@ public class Session {
         result = 31 * result + (stopTime != null ? stopTime.hashCode() : 0);
         result = 31 * result + countStart;
         result = 31 * result + sum;
-        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 

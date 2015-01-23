@@ -1,7 +1,6 @@
 package kz.sdauka.ormanager.entity;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 /**
@@ -12,7 +11,8 @@ import java.sql.Timestamp;
 public class SessionDetails {
     private int id;
     private Timestamp startTime;
-    private Time operationTime;
+    private Session sessionBySessionId;
+    private String gameName;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +36,13 @@ public class SessionDetails {
     }
 
     @Basic
-    @Column(name = "OPERATION_TIME", nullable = false, insertable = true, updatable = true)
-    public Time getOperationTime() {
-        return operationTime;
+    @Column(name = "GAME_NAME", nullable = true, insertable = true, updatable = true)
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setOperationTime(Time operationTime) {
-        this.operationTime = operationTime;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     @Override
@@ -53,8 +53,6 @@ public class SessionDetails {
         SessionDetails that = (SessionDetails) o;
 
         if (id != that.id) return false;
-        if (operationTime != null ? !operationTime.equals(that.operationTime) : that.operationTime != null)
-            return false;
         if (startTime != null ? !startTime.equals(that.startTime) : that.startTime != null) return false;
 
         return true;
@@ -64,7 +62,17 @@ public class SessionDetails {
     public int hashCode() {
         int result = id;
         result = 31 * result + (startTime != null ? startTime.hashCode() : 0);
-        result = 31 * result + (operationTime != null ? operationTime.hashCode() : 0);
         return result;
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "SESSION_ID", referencedColumnName = "ID", nullable = false)
+    public Session getSessionBySessionId() {
+        return sessionBySessionId;
+    }
+
+    public void setSessionBySessionId(Session sessionBySessionId) {
+        this.sessionBySessionId = sessionBySessionId;
     }
 }

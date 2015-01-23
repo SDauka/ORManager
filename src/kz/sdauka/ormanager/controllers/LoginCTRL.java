@@ -45,6 +45,7 @@ public class LoginCTRL implements Initializable {
 
     @FXML
     private void loginAction(ActionEvent event) throws SQLException, IOException {
+        getAdmin();
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/settingsForm.fxml"));
         if (login.getText().equals(admin.getLogin())) {
@@ -98,7 +99,7 @@ public class LoginCTRL implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        getAdmin();
+//        getAdmin();
     }
 
     private void getAdmin() {

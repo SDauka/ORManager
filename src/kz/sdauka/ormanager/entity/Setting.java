@@ -6,9 +6,7 @@ package kz.sdauka.ormanager.entity;
 public class Setting {
     private boolean hideTaskBar;
     private boolean disableTaskManager;
-    private boolean disableAltF4;
-    private boolean disableAltTab;
-    private boolean disableWin;
+    private boolean disableKeys;
     private boolean openNotification;
     private boolean closeNotification;
     private String emailAdresat;
@@ -37,28 +35,12 @@ public class Setting {
         this.disableTaskManager = disableTaskManager;
     }
 
-    public boolean isDisableAltF4() {
-        return disableAltF4;
+    public boolean isDisableKeys() {
+        return disableKeys;
     }
 
-    public void setDisableAltF4(boolean disableAltF4) {
-        this.disableAltF4 = disableAltF4;
-    }
-
-    public boolean isDisableAltTab() {
-        return disableAltTab;
-    }
-
-    public void setDisableAltTab(boolean disableAltTab) {
-        this.disableAltTab = disableAltTab;
-    }
-
-    public boolean isDisableWin() {
-        return disableWin;
-    }
-
-    public void setDisableWin(boolean disableWin) {
-        this.disableWin = disableWin;
+    public void setDisableKeys(boolean disableKeys) {
+        this.disableKeys = disableKeys;
     }
 
     public boolean isOpenNotification() {

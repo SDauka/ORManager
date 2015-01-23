@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,19 +16,23 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import kz.sdauka.ormanager.dao.factory.DAOFactory;
-import kz.sdauka.ormanager.entity.Admin;
-import kz.sdauka.ormanager.entity.Game;
-import kz.sdauka.ormanager.entity.Operator;
+import kz.sdauka.ormanager.entity.*;
+import kz.sdauka.ormanager.utils.ExportToExcel;
 import kz.sdauka.ormanager.utils.IniFileUtil;
 import kz.sdauka.ormanager.utils.ValidationUtils;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -41,11 +47,7 @@ public class SettingCTRL implements Initializable {
     @FXML
     private CheckBox disableTaskManager;
     @FXML
-    private CheckBox disableAltF4;
-    @FXML
-    private CheckBox disableAltTab;
-    @FXML
-    private CheckBox disableWin;
+    private CheckBox disableKeys;
     @FXML
     private CheckBox openNotification;
     @FXML
@@ -112,12 +114,42 @@ public class SettingCTRL implements Initializable {
     private Button reportExcelBtn;
     @FXML
     private Button searchBtn;
+    @FXML
+    private TableView<Session> sessionTable;
+    @FXML
+    private TableColumn<Session, Integer> sessionID;
+    @FXML
+    private TableColumn<Session, Date> sessionDate;
+    @FXML
+    private TableColumn<Session, Timestamp> sessionStartTime;
+    @FXML
+    private TableColumn<Session, Timestamp> sessionStopTime;
+    @FXML
+    private TableColumn<Session, Integer> sessionOperationCount;
+    @FXML
+    private TableColumn<Session, Integer> sessionSum;
+    @FXML
+    private TableView<SessionDetails> sessionDetailsTable;
+    @FXML
+    private TableColumn<SessionDetails, Integer> sessionDetailsID;
+    @FXML
+    private TableColumn<SessionDetails, Timestamp> sessionDetailStartTime;
+    @FXML
+    private TableColumn<SessionDetails, String> sessionDetailsGameName;
+    @FXML
+    private DatePicker firstPeriod;
+    @FXML
+    private DatePicker secondPeriod;
+    @FXML
+    private Label searchErrorLabel;
+    private FileChooser saveDialog = new FileChooser();
     private Admin admin;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getAdmin();
+        //таблица с играми
         idGames.setCellValueFactory(new PropertyValueFactory<Game, Integer>("id"));
         nameGames.setCellValueFactory(new PropertyValueFactory<Game, String>("name"));
         pathGames.setCellValueFactory(new PropertyValueFactory<Game, String>("path"));
@@ -125,18 +157,30 @@ public class SettingCTRL implements Initializable {
         attributeGames.setCellValueFactory(new PropertyValueFactory<Game, String>("attribute"));
         timeGames.setCellValueFactory(new PropertyValueFactory<Game, Integer>("time"));
         costGames.setCellValueFactory(new PropertyValueFactory<Game, Integer>("cost"));
+        gamesTable.setItems(getAllGames());
+        //таблица с операторами
         idOperators.setCellValueFactory(new PropertyValueFactory<Operator, Integer>("id"));
         nameOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("name"));
         loginOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("login"));
         passwordOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("password"));
         operatorsTable.setItems(getAllOperators());
-        gamesTable.setItems(getAllGames());
+        //таблица с сессией
+        sessionID.setCellValueFactory(new PropertyValueFactory<Session, Integer>("id"));
+        sessionDate.setCellValueFactory(new PropertyValueFactory<Session, Date>("day"));
+        sessionStartTime.setCellValueFactory(new PropertyValueFactory<Session, Timestamp>("startTime"));
+        sessionStopTime.setCellValueFactory(new PropertyValueFactory<Session, Timestamp>("stopTime"));
+        sessionOperationCount.setCellValueFactory(new PropertyValueFactory<Session, Integer>("countStart"));
+        sessionSum.setCellValueFactory(new PropertyValueFactory<Session, Integer>("sum"));
+        sessionTable.setItems(getAllSession());
+        //таблица с подробностью сессии
+        sessionDetailsID.setCellValueFactory(new PropertyValueFactory<SessionDetails, Integer>("id"));
+        sessionDetailStartTime.setCellValueFactory(new PropertyValueFactory<SessionDetails, Timestamp>("startTime"));
+        sessionDetailsGameName.setCellValueFactory(new PropertyValueFactory<SessionDetails, String>("gameName"));
+        //other
         password.setText(admin.getPassword());
         hideTaskBar.setSelected(IniFileUtil.getSetting().isHideTaskBar());
-        disableAltF4.setSelected(IniFileUtil.getSetting().isDisableAltF4());
-        disableAltTab.setSelected(IniFileUtil.getSetting().isDisableAltTab());
         disableTaskManager.setSelected(IniFileUtil.getSetting().isDisableTaskManager());
-        disableWin.setSelected(IniFileUtil.getSetting().isDisableWin());
+        disableKeys.setSelected(IniFileUtil.getSetting().isDisableKeys());
         openNotification.setSelected(IniFileUtil.getSetting().isOpenNotification());
         closeNotification.setSelected(IniFileUtil.getSetting().isCloseNotification());
         emailAdresat.setText(IniFileUtil.getSetting().getEmailAdresat());
@@ -153,6 +197,120 @@ public class SettingCTRL implements Initializable {
         reportExcelBtn.setGraphic(new ImageView("/img/excel.png"));
         searchBtn.setGraphic(new ImageView("/img/find.png"));
     }
+
+
+    public void handleExportToExcel(ActionEvent actionEvent) throws SQLException {
+        saveDialog.setTitle("Сохранение отчета");
+        saveDialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("EXCEL", "*.xls"));
+        File file = saveDialog.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        if (!sessionTable.getSelectionModel().isEmpty()) {
+            int selectedIndex = sessionDetailsTable.getSelectionModel().getSelectedIndex();
+            Session session = sessionTable.getSelectionModel().getSelectedItem();
+            List<SessionDetails> sessionDetails = DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId());
+            if (ExportToExcel.exportToExcel(file, session, sessionDetails)) {
+                searchErrorLabel.setText("Отчет экспортирован успешно...");
+                searchErrorLabel.setTextFill(Paint.valueOf("#02d63c"));
+                service.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                searchErrorLabel.setText("");
+                            }
+                        });
+                    }
+                }, 2, TimeUnit.SECONDS);
+            } else {
+                searchErrorLabel.setText("Не удалось экспортировать отчет...");
+                searchErrorLabel.setTextFill(Paint.valueOf("#d30f02"));
+                service.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                searchErrorLabel.setText("");
+                            }
+                        });
+                    }
+                }, 2, TimeUnit.SECONDS);
+            }
+        }
+    }
+
+    public void searchByDate(ActionEvent actionEvent) {
+        if (firstPeriod.getValue() == null && secondPeriod.getValue() == null) {
+            searchErrorLabel.setText("Выберите даты с-по...");
+            searchErrorLabel.setTextFill(Paint.valueOf("#d30f02"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            searchErrorLabel.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        } else if (firstPeriod.getValue() != null && secondPeriod.getValue() == null) {
+            sessionTable.setItems(getSessionsByDate(Date.valueOf(firstPeriod.getValue())));
+        } else {
+            sessionTable.setItems(getSessionsByDates(Date.valueOf(firstPeriod.getValue()), Date.valueOf(secondPeriod.getValue())));
+        }
+    }
+
+    private ObservableList<Session> getSessionsByDates(Date first, Date second) {
+        ObservableList<Session> sessions = FXCollections.observableArrayList();
+        try {
+            sessions.addAll(DAOFactory.getInstance().getSessionDAO().getSessionByDates(first, second));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+    private ObservableList<Session> getSessionsByDate(Date date) {
+        ObservableList<Session> sessions = FXCollections.observableArrayList();
+        try {
+            sessions.addAll(DAOFactory.getInstance().getSessionDAO().getSessionByDate(date));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+    private ObservableList<Session> getAllSession() {
+        ObservableList<Session> sessions = FXCollections.observableArrayList();
+        try {
+            sessions.addAll(DAOFactory.getInstance().getSessionDAO().getAllSession());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessions;
+    }
+
+    private ObservableList<SessionDetails> getSessionDetails(Session session) {
+        ObservableList<SessionDetails> sessionDetailses = FXCollections.observableArrayList();
+        try {
+            sessionDetailses.addAll(DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId()));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return sessionDetailses;
+    }
+
+    public void handleGetSessionDetails(Event event) {
+        if (!sessionTable.getSelectionModel().isEmpty()) {
+            int selectedIndex = sessionDetailsTable.getSelectionModel().getSelectedIndex();
+            sessionDetailsTable.setItems(null);
+            sessionDetailsTable.layout();
+            sessionDetailsTable.setItems(getSessionDetails(sessionTable.getSelectionModel().getSelectedItem()));
+            sessionDetailsTable.getSelectionModel().select(selectedIndex);
+        }
+    }
+
 
     private void refreshOperatorsTable() {
         int selectedIndex = operatorsTable.getSelectionModel().getSelectedIndex();
@@ -382,9 +540,7 @@ public class SettingCTRL implements Initializable {
     private void saveAccessRights(ActionEvent actionEvent) {
         IniFileUtil.setIniFileElement("Access Rights", "hideTaskBar", hideTaskBar.isSelected());
         IniFileUtil.setIniFileElement("Access Rights", "disableTaskManager", disableTaskManager.isSelected());
-        IniFileUtil.setIniFileElement("Access Rights", "disableAltF4", disableAltF4.isSelected());
-        IniFileUtil.setIniFileElement("Access Rights", "disableAltTab", disableAltTab.isSelected());
-        IniFileUtil.setIniFileElement("Access Rights", "disableWin", disableWin.isSelected());
+        IniFileUtil.setIniFileElement("Access Rights", "disableKeys", disableKeys.isSelected());
         accessRightsLbl.setText("Сохранено");
         accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
         service.schedule(new Runnable() {
@@ -476,5 +632,6 @@ public class SettingCTRL implements Initializable {
             }, 2, TimeUnit.SECONDS);
         }
     }
+
 
 }

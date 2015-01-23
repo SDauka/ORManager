@@ -141,7 +141,7 @@ public class GamesEditDialogCTRL implements Initializable {
     }
 
     private boolean isValid() {
-        if (gameName.getText().equals("") || gamePath.getText().equals("") || gameTime.getText().equals("") || gameImagePath.getText().equals("") || gameAttribute.getText().equals("") || gameCost.getText().equals("")) {
+        if (gameName.getText().equals("") || gamePath.getText().equals("") || gameTime.getText().equals("") || gameImagePath.getText().equals("") || gameCost.getText().equals("")) {
             errorLabel.setText("Заполните все поля");
             errorLabel.setTextFill(Paint.valueOf("#d30f02"));
             service.schedule(new Runnable() {
