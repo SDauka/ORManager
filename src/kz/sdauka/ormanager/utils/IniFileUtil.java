@@ -15,8 +15,11 @@ public class IniFileUtil {
     private static final Logger LOG = Logger.getLogger(IniFileUtil.class);
     private static Setting setting = readIniFile();
     private static final String filePath = "C:\\Users\\Dauletkhan\\settings.ini";
+    //private static BasicTextEncryptor basicTextEncryptor = new BasicTextEncryptor();
+
 
     private static void createIniFile() {
+        // basicTextEncryptor.setPassword("sdauka");
         try {
             File file = new File(filePath);
             if (!file.exists()) {
@@ -28,9 +31,9 @@ public class IniFileUtil {
             wini.put("Access Rights", "disableKeys", "true");
             wini.put("Email settings", "openNotification", "true");
             wini.put("Email settings", "closeNotification", "true");
-            wini.put("Email settings", "emailAdresat", "s.dauka@bk.ru");
-            wini.put("Email settings", "emailSender", "s.dauka@bk.ru");
-            wini.put("Email settings", "emailPassword", "240792b");
+            wini.put("Email settings", "emailAdresat", "sample@mail.ru");
+            wini.put("Email settings", "emailSender", "sample@mail.ru");
+            wini.put("Email settings", "emailPassword", "qwerty");
             wini.put("Email settings", "smtp", "smtp.mail.ru");
             wini.put("Email settings", "port", "465");
             wini.store();
@@ -40,6 +43,7 @@ public class IniFileUtil {
     }
 
     private static Setting readIniFile() {
+//        basicTextEncryptor.setPassword("sdauka");
         Setting setting1 = new Setting();
         try {
             File file = new File(filePath);
@@ -76,7 +80,7 @@ public class IniFileUtil {
                 file.createNewFile();
             }
             Wini wini = new Wini(file);
-            wini.put(sectionName, optionName, value);
+            wini.put(sectionName, optionName, String.valueOf(value));
             wini.store();
         } catch (IOException e) {
             LOG.error("get ini file element is failed", e);

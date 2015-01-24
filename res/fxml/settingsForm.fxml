@@ -143,26 +143,29 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="337.0">
                     <children>
-                        <ToolBar prefHeight="40.0" prefWidth="546.0">
+                        <ToolBar prefHeight="49.0" prefWidth="546.0">
                             <items>
                                 <Label text="Период"/>
-                                <DatePicker fx:id="firstPeriod"/>
+                                <DatePicker fx:id="firstPeriod" prefHeight="25.0" prefWidth="139.0"/>
                                 <Label text="-"/>
-                                <DatePicker fx:id="secondPeriod"/>
+                                <DatePicker fx:id="secondPeriod" prefHeight="25.0" prefWidth="136.0"/>
                                 <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#searchByDate"
-                                        prefHeight="25.0" prefWidth="113.0" text="Поиск"/>
+                                        prefHeight="25.0" prefWidth="81.0" text="Поиск"/>
+                                <Button fx:id="reportExcelBtn" mnemonicParsing="false" onAction="#handleExportToExcel"
+                                        text="Вывод в Excel"/>
                             </items>
                         </ToolBar>
-                        <TitledPane animated="false" collapsible="false" layoutY="40.0" prefHeight="198.0"
+                        <TitledPane animated="false" collapsible="false" layoutY="49.0" prefHeight="222.0"
                                     prefWidth="546.0" text="Сессии">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="163.0" prefWidth="544.0">
                                     <children>
                                         <TableView fx:id="sessionTable" onMouseClicked="#handleGetSessionDetails"
-                                                   prefHeight="176.0" prefWidth="546.0">
+                                                   prefHeight="195.0" prefWidth="546.0">
                                             <columns>
-                                                <TableColumn fx:id="sessionID" prefWidth="46.0" text="ID"/>
-                                                <TableColumn fx:id="sessionDate" prefWidth="76.0" text="День"/>
+                                                <TableColumn fx:id="sessionID" prefWidth="39.0" text="ID"/>
+                                                <TableColumn fx:id="sessionOperator" prefWidth="68.0" text="Оператор"/>
+                                                <TableColumn fx:id="sessionDate" prefWidth="54.0" text="День"/>
                                                 <TableColumn fx:id="sessionStartTime" prefWidth="126.0"
                                                              text="Время начала"/>
                                                 <TableColumn fx:id="sessionStopTime" prefWidth="128.0"
@@ -176,12 +179,12 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutY="237.0" prefHeight="234.0"
+                        <TitledPane animated="false" collapsible="false" layoutY="271.0" prefHeight="242.0"
                                     prefWidth="546.0" text="Игры">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="544.0">
                                     <children>
-                                        <TableView fx:id="sessionDetailsTable" prefHeight="205.0" prefWidth="546.0">
+                                        <TableView fx:id="sessionDetailsTable" prefHeight="214.0" prefWidth="546.0">
                                             <columns>
                                                 <TableColumn fx:id="sessionDetailsID" prefWidth="46.0" text="ID"/>
                                                 <TableColumn fx:id="sessionDetailStartTime" prefWidth="237.0"
@@ -194,13 +197,6 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <ToolBar layoutY="471.0" prefHeight="32.0" prefWidth="546.0">
-                            <items>
-                                <Button fx:id="reportExcelBtn" mnemonicParsing="false" onAction="#handleExportToExcel"
-                                        text="Вывод в Excel"/>
-                                <Label fx:id="searchErrorLabel"/>
-                            </items>
-                        </ToolBar>
                     </children>
                 </AnchorPane>
             </content>

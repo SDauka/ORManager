@@ -119,6 +119,8 @@ public class SettingCTRL implements Initializable {
     @FXML
     private TableColumn<Session, Integer> sessionID;
     @FXML
+    private TableColumn<Session, String> sessionOperator;
+    @FXML
     private TableColumn<Session, Date> sessionDate;
     @FXML
     private TableColumn<Session, Timestamp> sessionStartTime;
@@ -166,6 +168,7 @@ public class SettingCTRL implements Initializable {
         operatorsTable.setItems(getAllOperators());
         //таблица с сессией
         sessionID.setCellValueFactory(new PropertyValueFactory<Session, Integer>("id"));
+        sessionOperator.setCellValueFactory(new PropertyValueFactory<Session, String>("operator"));
         sessionDate.setCellValueFactory(new PropertyValueFactory<Session, Date>("day"));
         sessionStartTime.setCellValueFactory(new PropertyValueFactory<Session, Timestamp>("startTime"));
         sessionStopTime.setCellValueFactory(new PropertyValueFactory<Session, Timestamp>("stopTime"));
@@ -204,7 +207,6 @@ public class SettingCTRL implements Initializable {
         saveDialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("EXCEL", "*.xls"));
         File file = saveDialog.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
         if (!sessionTable.getSelectionModel().isEmpty()) {
-            int selectedIndex = sessionDetailsTable.getSelectionModel().getSelectedIndex();
             Session session = sessionTable.getSelectionModel().getSelectedItem();
             List<SessionDetails> sessionDetails = DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId());
             if (ExportToExcel.exportToExcel(file, session, sessionDetails)) {
