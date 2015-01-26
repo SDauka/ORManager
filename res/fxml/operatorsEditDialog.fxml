@@ -2,20 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.Pane?>
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="175.0"
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0"
       prefWidth="274.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="kz.sdauka.ormanager.controllers.OperatorsEditDialogCTRL">
     <children>
         <Label layoutX="18.0" layoutY="26.0" text="ФИО"/>
-        <Label layoutX="18.0" layoutY="59.0" text="Логин"/>
-        <Label layoutX="14.0" layoutY="94.0" text="Пароль"/>
         <TextField fx:id="nameText" layoutX="79.0" layoutY="22.0" prefHeight="25.0" prefWidth="186.0"/>
-        <TextField fx:id="loginText" layoutX="79.0" layoutY="55.0" prefHeight="25.0" prefWidth="186.0"/>
-        <TextField fx:id="passwordText" layoutX="79.0" layoutY="90.0" prefHeight="25.0" prefWidth="186.0"/>
-        <Button defaultButton="true" layoutX="137.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleOK"
+        <Button defaultButton="true" layoutX="137.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleOK"
                 prefHeight="25.0" prefWidth="61.0" text="ОК"/>
-        <Button cancelButton="true" layoutX="204.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleCancel"
+        <Button cancelButton="true" layoutX="204.0" layoutY="57.0" mnemonicParsing="false" onAction="#handleCancel"
                 prefHeight="25.0" prefWidth="61.0" text="Отмена"/>
-        <Label fx:id="errorLabel" layoutX="14.0" layoutY="139.0"/>
+        <Label fx:id="errorLabel" layoutX="15.0" layoutY="82.0"/>
     </children>
 </Pane>

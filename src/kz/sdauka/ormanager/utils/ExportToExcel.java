@@ -20,8 +20,7 @@ import java.util.List;
 public class ExportToExcel {
     private static final Logger LOG = Logger.getLogger(ExportToExcel.class);
 
-    public static boolean exportToExcel(File file, Session session, List<SessionDetails> sessionDetailses) {
-        boolean result = false;
+    public static void exportToExcel(File file, Session session, List<SessionDetails> sessionDetailses) {
         try {
             WritableWorkbook excel = Workbook.createWorkbook(file);
             WritableSheet sessions = excel.createSheet("Отчет", 0);
@@ -33,13 +32,11 @@ public class ExportToExcel {
             expandColumn(sessionDetails, 3);
             excel.write();
             excel.close();
-            result = true;
         } catch (IOException e) {
             LOG.error(e);
         } catch (WriteException e) {
             LOG.error(e);
         }
-        return result;
     }
 
     private static void expandColumn(WritableSheet sheet, int amountOfColumns) {

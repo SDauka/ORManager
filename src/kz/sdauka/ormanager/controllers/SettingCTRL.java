@@ -79,10 +79,6 @@ public class SettingCTRL implements Initializable {
     @FXML
     private TableColumn<Operator, String> nameOperators;
     @FXML
-    private TableColumn<Operator, String> loginOperators;
-    @FXML
-    private TableColumn<Operator, String> passwordOperators;
-    @FXML
     private Button addOperatorBtn;
     @FXML
     private Button deleteOperatorBtn;
@@ -163,8 +159,6 @@ public class SettingCTRL implements Initializable {
         //таблица с операторами
         idOperators.setCellValueFactory(new PropertyValueFactory<Operator, Integer>("id"));
         nameOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("name"));
-        loginOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("login"));
-        passwordOperators.setCellValueFactory(new PropertyValueFactory<Operator, String>("password"));
         operatorsTable.setItems(getAllOperators());
         //таблица с сессией
         sessionID.setCellValueFactory(new PropertyValueFactory<Session, Integer>("id"));
@@ -203,40 +197,16 @@ public class SettingCTRL implements Initializable {
 
 
     public void handleExportToExcel(ActionEvent actionEvent) throws SQLException {
-        saveDialog.setTitle("Сохранение отчета");
-        saveDialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("EXCEL", "*.xls"));
-        File file = saveDialog.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
-        if (!sessionTable.getSelectionModel().isEmpty()) {
-            Session session = sessionTable.getSelectionModel().getSelectedItem();
-            List<SessionDetails> sessionDetails = DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId());
-            if (ExportToExcel.exportToExcel(file, session, sessionDetails)) {
-                searchErrorLabel.setText("Отчет экспортирован успешно...");
-                searchErrorLabel.setTextFill(Paint.valueOf("#02d63c"));
-                service.schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                searchErrorLabel.setText("");
-                            }
-                        });
-                    }
-                }, 2, TimeUnit.SECONDS);
-            } else {
-                searchErrorLabel.setText("Не удалось экспортировать отчет...");
-                searchErrorLabel.setTextFill(Paint.valueOf("#d30f02"));
-                service.schedule(new Runnable() {
-                    @Override
-                    public void run() {
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                searchErrorLabel.setText("");
-                            }
-                        });
-                    }
-                }, 2, TimeUnit.SECONDS);
+        if (sessionTable.getSelectionModel().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Сессия для отчета не выбрана!", "Выберите сессию", JOptionPane.OK_OPTION);
+        } else {
+            saveDialog.setTitle("Сохранение отчета");
+            saveDialog.getExtensionFilters().add(new FileChooser.ExtensionFilter("EXCEL", "*.xls"));
+            File file = saveDialog.showSaveDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+            if (!sessionTable.getSelectionModel().isEmpty()) {
+                Session session = sessionTable.getSelectionModel().getSelectedItem();
+                List<SessionDetails> sessionDetails = DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId());
+                ExportToExcel.exportToExcel(file, session, sessionDetails);
             }
         }
     }
@@ -462,7 +432,7 @@ public class SettingCTRL implements Initializable {
 
     private void getAdmin() {
         try {
-            admin = DAOFactory.getInstance().getAdminDAO().getAdmin(1);
+            admin = DAOFactory.getInstance().getAdminDAO().getAdmin();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -600,7 +570,6 @@ public class SettingCTRL implements Initializable {
 
     @FXML
     private void savePasswordAction(ActionEvent actionEvent) throws SQLException {
-
         if (password.getText().equals(rePassword.getText())) {
             admin.setPassword(rePassword.getText());
             DAOFactory.getInstance().getAdminDAO().updatePassword(admin);

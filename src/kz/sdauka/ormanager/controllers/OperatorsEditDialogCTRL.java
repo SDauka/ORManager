@@ -25,10 +25,6 @@ public class OperatorsEditDialogCTRL implements Initializable {
     @FXML
     private TextField nameText;
     @FXML
-    private TextField loginText;
-    @FXML
-    private TextField passwordText;
-    @FXML
     private Label errorLabel;
     private static Operator operator;
     private Stage editDialogStage;
@@ -66,17 +62,12 @@ public class OperatorsEditDialogCTRL implements Initializable {
 
     public void setOperator(Operator operator) {
         this.operator = operator;
-
         nameText.setText(operator.getName());
-        loginText.setText(operator.getLogin());
-        passwordText.setText(operator.getPassword());
     }
 
     @FXML
     private void handleOK(ActionEvent actionEvent) {
         if (isValid()) {
-            operator.setPassword(passwordText.getText());
-            operator.setLogin(loginText.getText());
             operator.setName(nameText.getText());
             okClicked = true;
             editDialogStage.close();
@@ -89,7 +80,7 @@ public class OperatorsEditDialogCTRL implements Initializable {
     }
 
     private boolean isValid() {
-        if (nameText.getText().equals("") || passwordText.getText().equals("") || loginText.getText().equals("")) {
+        if (nameText.getText().equals("")) {
             errorLabel.setText("Заполните все поля");
             errorLabel.setTextFill(Paint.valueOf("#d30f02"));
             service.schedule(new Runnable() {

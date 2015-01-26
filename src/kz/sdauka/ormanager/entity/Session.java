@@ -8,6 +8,7 @@ import java.sql.Timestamp;
  * Created by Dauletkhan on 10.01.2015.
  */
 @Entity
+@Table(name = "SESSION", schema = "PUBLIC", catalog = "ORMANAGER")
 public class Session {
     private int id;
     private Date day;
@@ -49,7 +50,7 @@ public class Session {
     }
 
     @Basic
-    @Column(name = "STOP_TIME", nullable = false, insertable = true, updatable = true)
+    @Column(name = "STOP_TIME", nullable = true, insertable = true, updatable = true)
     public Timestamp getStopTime() {
         return stopTime;
     }
@@ -59,7 +60,7 @@ public class Session {
     }
 
     @Basic
-    @Column(name = "COUNT_START", nullable = false, insertable = true, updatable = true)
+    @Column(name = "COUNT_START", nullable = true, insertable = true, updatable = true)
     public int getCountStart() {
         return countStart;
     }
@@ -69,7 +70,7 @@ public class Session {
     }
 
     @Basic
-    @Column(name = "SUM", nullable = false, insertable = true, updatable = true)
+    @Column(name = "SUM", nullable = true, insertable = true, updatable = true)
     public int getSum() {
         return sum;
     }
@@ -79,7 +80,7 @@ public class Session {
     }
 
     @Basic
-    @Column(name = "OPERATOR", nullable = false, insertable = true, updatable = true)
+    @Column(name = "OPERATOR", nullable = true, insertable = true, updatable = true)
     public String getOperator() {
         return operator;
     }

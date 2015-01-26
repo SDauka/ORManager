@@ -6,7 +6,7 @@ import javax.persistence.*;
  * Created by Dauletkhan on 10.01.2015.
  */
 @Entity
-@Table(name = "GAMES")
+@Table(name = "GAMES", schema = "PUBLIC", catalog = "ORMANAGER")
 public class Game {
     private int id;
     private String path;
@@ -15,7 +15,6 @@ public class Game {
     private int cost;
     private String attribute;
     private String image;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,6 +98,7 @@ public class Game {
         if (id != game.id) return false;
         if (time != game.time) return false;
         if (attribute != null ? !attribute.equals(game.attribute) : game.attribute != null) return false;
+        if (image != null ? !image.equals(game.image) : game.image != null) return false;
         if (name != null ? !name.equals(game.name) : game.name != null) return false;
         if (path != null ? !path.equals(game.path) : game.path != null) return false;
 
@@ -113,6 +113,7 @@ public class Game {
         result = 31 * result + time;
         result = 31 * result + cost;
         result = 31 * result + (attribute != null ? attribute.hashCode() : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
         return result;
     }
 }

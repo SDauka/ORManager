@@ -98,15 +98,11 @@
                                         onAction="#handleDeleteOperator"/>
                             </items>
                         </ToolBar>
-                        <TableView fx:id="operatorsTable" layoutY="40.0" prefHeight="473.0" prefWidth="546.0">
-                            <columnResizePolicy>
-                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
-                            </columnResizePolicy>
+                        <TableView fx:id="operatorsTable" editable="true" layoutY="40.0" prefHeight="473.0"
+                                   prefWidth="546.0">
                             <columns>
                                 <TableColumn fx:id="idOperators" prefWidth="31.0" resizable="false" text="№"/>
-                                <TableColumn fx:id="nameOperators" prefWidth="241.0" text="Имя"/>
-                                <TableColumn fx:id="loginOperators" prefWidth="75.0" text="Логин"/>
-                                <TableColumn fx:id="passwordOperators" prefWidth="75.0" text="Пароль"/>
+                                <TableColumn fx:id="nameOperators" minWidth="0.0" prefWidth="270.0" text="Имя"/>
                             </columns>
                         </TableView>
                     </children>
@@ -146,9 +142,9 @@
                         <ToolBar prefHeight="49.0" prefWidth="546.0">
                             <items>
                                 <Label text="Период"/>
-                                <DatePicker fx:id="firstPeriod" prefHeight="25.0" prefWidth="139.0"/>
+                                <DatePicker fx:id="firstPeriod" prefHeight="25.0" prefWidth="124.0"/>
                                 <Label text="-"/>
-                                <DatePicker fx:id="secondPeriod" prefHeight="25.0" prefWidth="136.0"/>
+                                <DatePicker fx:id="secondPeriod" prefHeight="25.0" prefWidth="119.0"/>
                                 <Button fx:id="searchBtn" mnemonicParsing="false" onAction="#searchByDate"
                                         prefHeight="25.0" prefWidth="81.0" text="Поиск"/>
                                 <Button fx:id="reportExcelBtn" mnemonicParsing="false" onAction="#handleExportToExcel"
