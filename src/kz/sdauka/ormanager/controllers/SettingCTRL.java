@@ -24,6 +24,7 @@ import kz.sdauka.ormanager.entity.*;
 import kz.sdauka.ormanager.utils.ExportToExcel;
 import kz.sdauka.ormanager.utils.IniFileUtil;
 import kz.sdauka.ormanager.utils.ValidationUtils;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.io.File;
@@ -140,10 +141,12 @@ public class SettingCTRL implements Initializable {
     private DatePicker secondPeriod;
     @FXML
     private Label searchErrorLabel;
+    @FXML
+    private TextField adsTextField;
     private FileChooser saveDialog = new FileChooser();
     private Admin admin;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-
+    private static final Logger LOG = Logger.getLogger(SettingCTRL.class);
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getAdmin();
@@ -185,6 +188,7 @@ public class SettingCTRL implements Initializable {
         emailSender.setText(IniFileUtil.getSetting().getEmailSender());
         smtp.setText(IniFileUtil.getSetting().getSmtp());
         port.setText(IniFileUtil.getSetting().getPort());
+        adsTextField.setText(IniFileUtil.getSetting().getAds());
         addOperatorBtn.setGraphic(new ImageView("/img/user_add.png"));
         editOperatorBtn.setGraphic(new ImageView("/img/user_edit.png"));
         deleteOperatorBtn.setGraphic(new ImageView("/img/user_remove.png"));
@@ -238,7 +242,7 @@ public class SettingCTRL implements Initializable {
         try {
             sessions.addAll(DAOFactory.getInstance().getSessionDAO().getSessionByDates(first, second));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return sessions;
     }
@@ -248,7 +252,7 @@ public class SettingCTRL implements Initializable {
         try {
             sessions.addAll(DAOFactory.getInstance().getSessionDAO().getSessionByDate(date));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return sessions;
     }
@@ -258,7 +262,7 @@ public class SettingCTRL implements Initializable {
         try {
             sessions.addAll(DAOFactory.getInstance().getSessionDAO().getAllSession());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return sessions;
     }
@@ -268,7 +272,7 @@ public class SettingCTRL implements Initializable {
         try {
             sessionDetailses.addAll(DAOFactory.getInstance().getSessionDAO().getSessionDetails(session.getId()));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
         return sessionDetailses;
     }
@@ -386,7 +390,7 @@ public class SettingCTRL implements Initializable {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Изменить данные");
             dialogStage.getIcons().add(new Image("/img/icon.png"));
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
@@ -399,7 +403,7 @@ public class SettingCTRL implements Initializable {
             return controller.isOkClicked();
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded
-            e.printStackTrace();
+            LOG.error(e);
             return false;
         }
     }
@@ -412,7 +416,7 @@ public class SettingCTRL implements Initializable {
             Stage dialogStage = new Stage();
             dialogStage.setTitle("Изменить данные");
             dialogStage.getIcons().add(new Image("/img/icon.png"));
-            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
             dialogStage.setResizable(false);
@@ -425,7 +429,7 @@ public class SettingCTRL implements Initializable {
             return controller.isOkClicked();
         } catch (IOException e) {
             // Exception gets thrown if the fxml file could not be loaded
-            e.printStackTrace();
+            LOG.error(e);
             return false;
         }
     }
@@ -434,7 +438,7 @@ public class SettingCTRL implements Initializable {
         try {
             admin = DAOFactory.getInstance().getAdminDAO().getAdmin();
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -443,7 +447,7 @@ public class SettingCTRL implements Initializable {
         try {
             operatorList.addAll(DAOFactory.getInstance().getOperatorsDAO().getAllOperators());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
 
         return operatorList;
@@ -454,7 +458,7 @@ public class SettingCTRL implements Initializable {
         try {
             gamesList.addAll(DAOFactory.getInstance().getGamesDAO().getAllGames());
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
 
         return gamesList;
@@ -464,7 +468,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getGamesDAO().setGame(game);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -472,7 +476,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getGamesDAO().updateGame(game);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -480,7 +484,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getGamesDAO().deleteGame(game);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -488,7 +492,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getOperatorsDAO().setOperator(operator);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -496,7 +500,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getOperatorsDAO().updateOperator(operator);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -504,7 +508,7 @@ public class SettingCTRL implements Initializable {
         try {
             DAOFactory.getInstance().getOperatorsDAO().deleteOperator(operator);
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 
@@ -605,4 +609,27 @@ public class SettingCTRL implements Initializable {
     }
 
 
+    public void handleAdsFileChooser(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        configureFileChooserAds(fileChooser);
+        File file = fileChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        if (file != null) {
+            adsTextField.setText(file.getAbsolutePath());
+        }
+    }
+
+    public void saveAdsSettings(ActionEvent actionEvent) {
+        if (!adsTextField.getText().isEmpty()) {
+            IniFileUtil.setIniFileElement("Ads settings", "ads", adsTextField.getText());
+        }
+    }
+
+    private static void configureFileChooserAds(
+            final FileChooser fileChooser) {
+        fileChooser.setTitle("Укажите ролик");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("MP4", "*.mp4"),
+                new FileChooser.ExtensionFilter("AVI", "*.avi")
+        );
+    }
 }

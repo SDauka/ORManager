@@ -8,11 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import kz.sdauka.ormanager.dao.factory.DAOFactory;
 import kz.sdauka.ormanager.entity.Operator;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -34,15 +32,6 @@ public class OperatorsEditDialogCTRL implements Initializable {
     public static Operator getOperator() {
         return operator;
     }
-
-    private void addNewOperator(Operator operator) {
-        try {
-            DAOFactory.getInstance().getOperatorsDAO().setOperator(operator);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public Stage getEditDialogStage() {
         return editDialogStage;

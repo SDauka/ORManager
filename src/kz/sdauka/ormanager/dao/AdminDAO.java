@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public interface AdminDAO {
     public Admin getAdmin() throws SQLException;
 
-    public void inserAdmin(Admin admin) throws SQLException;
+    public void insertAdmin(Admin admin) throws SQLException;
 
     public boolean checkAdmin() throws SQLException;
     public void updatePassword(Admin admin) throws SQLException;

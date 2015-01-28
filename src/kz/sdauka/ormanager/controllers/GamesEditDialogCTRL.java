@@ -11,6 +11,7 @@ import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kz.sdauka.ormanager.entity.Game;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.net.URL;
@@ -43,6 +44,7 @@ public class GamesEditDialogCTRL implements Initializable {
     private final FileChooser imageChooser = new FileChooser();
     private final FileChooser gameChooser = new FileChooser();
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+    private static final Logger LOG = Logger.getLogger(GamesEditDialogCTRL.class);
 
     public boolean isOkClicked() {
         return okClicked;
@@ -119,9 +121,6 @@ public class GamesEditDialogCTRL implements Initializable {
     private static void configureFileChooserIMG(
             final FileChooser fileChooser) {
         fileChooser.setTitle("Укажите изображение");
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
                 new FileChooser.ExtensionFilter("JPG", "*.jpg"),
@@ -132,12 +131,9 @@ public class GamesEditDialogCTRL implements Initializable {
     private static void configureFileChooserEXE(
             final FileChooser fileChooser) {
         fileChooser.setTitle("Укажите файл запуска игры");
-        fileChooser.setInitialDirectory(
-                new File(System.getProperty("user.home"))
-        );
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("EXE", "*.exe")
-        );
+//        fileChooser.getExtensionFilters().addAll(
+//                new FileChooser.ExtensionFilter("EXE", "*.exe")
+//        );
     }
 
     private boolean isValid() {

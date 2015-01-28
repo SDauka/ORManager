@@ -3,6 +3,7 @@ package kz.sdauka.ormanager.dao.impl;
 import kz.sdauka.ormanager.dao.OperatorsDAO;
 import kz.sdauka.ormanager.entity.Operator;
 import kz.sdauka.ormanager.utils.HibernateUtil;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 import javax.swing.*;
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by Dauletkhan on 12.01.2015.
  */
 public class OperatorsDAOImpl implements OperatorsDAO {
-
+    private static final Logger LOG = Logger.getLogger(OperatorsDAOImpl.class);
     @Override
     public List<Operator> getAllOperators() throws SQLException {
         Session session = null;
@@ -23,7 +24,8 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             operators = session.createCriteria(Operator.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
+            LOG.error(e);
+            JOptionPane.showMessageDialog(null, "Ошибка загрузки данных операторов", "Ошибка загрузки данных", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -41,7 +43,8 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.save(operator);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            LOG.error(e);
+            JOptionPane.showMessageDialog(null, "Ошибка добавления оператора", "Ошибка при вставке", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -59,7 +62,8 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.update(operator);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            LOG.error(e);
+            JOptionPane.showMessageDialog(null, "Ошибка обновления данных оператора", "Ошибка при вставке", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -76,7 +80,8 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.delete(operator);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+            LOG.error(e);
+            JOptionPane.showMessageDialog(null, "Ошбика удаления оператора", "Ошибка при удалении", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

@@ -18,8 +18,10 @@ import javafx.stage.WindowEvent;
 import kz.sdauka.ormanager.dao.factory.DAOFactory;
 import kz.sdauka.ormanager.entity.Admin;
 import kz.sdauka.ormanager.utils.EmailSenderUtil;
+import kz.sdauka.ormanager.utils.HibernateUtil;
 import kz.sdauka.ormanager.utils.IniFileUtil;
 import kz.sdauka.ormanager.utils.InternetUtil;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +42,7 @@ public class LoginCTRL implements Initializable {
     private EmailSenderUtil emailSenderUtil;
     private Admin admin;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-
+    private static final Logger LOG = Logger.getLogger(LoginCTRL.class);
     @FXML
     private void loginAction(ActionEvent event) throws SQLException, IOException {
         if (admin == null) {
@@ -58,6 +60,7 @@ public class LoginCTRL implements Initializable {
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
                     public void handle(WindowEvent event) {
+                        HibernateUtil.shutdown();
                         System.exit(1);
                     }
                 });
@@ -92,12 +95,12 @@ public class LoginCTRL implements Initializable {
             } else {
                 Admin newAdmin = new Admin();
                 newAdmin.setPassword("admin");
-                DAOFactory.getInstance().getAdminDAO().inserAdmin(newAdmin);
+                DAOFactory.getInstance().getAdminDAO().insertAdmin(newAdmin);
                 admin = DAOFactory.getInstance().getAdminDAO().getAdmin();
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOG.error(e);
         }
     }
 

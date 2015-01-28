@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
 public class ValidationUtils {
 
     public static boolean isEmailValid(String email) {
-        boolean isEmailValid = true;
-        Matcher emailMatcher = null;
+        boolean isEmailValid;
+        Matcher emailMatcher;
         if (email == null || email.isEmpty()) {
             isEmailValid = false;
         } else {

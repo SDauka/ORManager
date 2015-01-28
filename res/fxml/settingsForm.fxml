@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0"
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0"
          prefWidth="546.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="kz.sdauka.ormanager.controllers.SettingCTRL">
     <tabs>
@@ -10,8 +10,8 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="546.0">
                     <children>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="26.0"
-                                    prefHeight="108.0" prefWidth="518.0" text="Изменение пароля">
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="8.0" prefHeight="108.0"
+                                    prefWidth="518.0" text="Изменение пароля">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="516.0">
                                     <children>
@@ -29,7 +29,7 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="150.0"
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="123.0"
                                     prefHeight="117.0" prefWidth="518.0" text="Настройка ограничений оператора">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="102.0" prefWidth="516.0">
@@ -48,7 +48,7 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="12.0" layoutY="281.0"
+                        <TitledPane animated="false" collapsible="false" layoutX="12.0" layoutY="246.0"
                                     prefHeight="223.0" prefWidth="522.0" text="Настройка почты">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="232.0" prefWidth="520.0">
@@ -82,6 +82,22 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
+                        <TitledPane animated="false" collapsible="false" layoutX="13.0" layoutY="478.0"
+                                    prefHeight="75.0" prefWidth="520.0" text="Реклама. Выберите ролик (avi/mp4)">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="518.0">
+                                    <children>
+                                        <TextField fx:id="adsTextField" editable="false" layoutX="8.0" layoutY="12.0"
+                                                   prefHeight="25.0" prefWidth="368.0"/>
+                                        <Button layoutX="376.0" layoutY="12.0" mnemonicParsing="false"
+                                                onAction="#handleAdsFileChooser" text="..."/>
+                                        <Button defaultButton="true" layoutX="409.0" layoutY="12.0"
+                                                mnemonicParsing="false" onAction="#saveAdsSettings" prefHeight="25.0"
+                                                prefWidth="95.0" text="Сохранить"/>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </TitledPane>
                     </children>
                 </AnchorPane>
             </content>
@@ -98,7 +114,7 @@
                                         onAction="#handleDeleteOperator"/>
                             </items>
                         </ToolBar>
-                        <TableView fx:id="operatorsTable" editable="true" layoutY="40.0" prefHeight="473.0"
+                        <TableView fx:id="operatorsTable" editable="true" layoutY="40.0" prefHeight="513.0"
                                    prefWidth="546.0">
                             <columns>
                                 <TableColumn fx:id="idOperators" prefWidth="31.0" resizable="false" text="№"/>
@@ -113,7 +129,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="337.0">
                     <children>
-                        <TableView fx:id="gamesTable" layoutY="40.0" prefHeight="474.0" prefWidth="546.0">
+                        <TableView fx:id="gamesTable" layoutY="40.0" prefHeight="514.0" prefWidth="546.0">
                             <columns>
                                 <TableColumn fx:id="idGames" prefWidth="40.0" text="ID"/>
                                 <TableColumn fx:id="nameGames" prefWidth="116.0" text="Название"/>
@@ -175,12 +191,12 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutY="271.0" prefHeight="242.0"
+                        <TitledPane animated="false" collapsible="false" layoutY="271.0" prefHeight="282.0"
                                     prefWidth="546.0" text="Игры">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="243.0" prefWidth="544.0">
                                     <children>
-                                        <TableView fx:id="sessionDetailsTable" prefHeight="214.0" prefWidth="546.0">
+                                        <TableView fx:id="sessionDetailsTable" prefHeight="252.0" prefWidth="546.0">
                                             <columns>
                                                 <TableColumn fx:id="sessionDetailsID" prefWidth="46.0" text="ID"/>
                                                 <TableColumn fx:id="sessionDetailStartTime" prefWidth="237.0"
