@@ -2,7 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="587.0"
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="585.0"
          prefWidth="546.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="kz.sdauka.ormanager.controllers.SettingCTRL">
     <tabs>
@@ -10,45 +10,47 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="512.0" prefWidth="546.0">
                     <children>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="8.0" prefHeight="108.0"
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="8.0" prefHeight="102.0"
                                     prefWidth="518.0" text="Изменение пароля">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="516.0">
                                     <children>
-                                        <Label layoutX="14.0" layoutY="14.0" text="Пароль"/>
-                                        <PasswordField fx:id="password" layoutX="12.0" layoutY="31.0" prefHeight="25.0"
+                                        <Label layoutX="14.0" layoutY="6.0" text="Пароль"/>
+                                        <PasswordField fx:id="password" layoutX="12.0" layoutY="26.0" prefHeight="25.0"
                                                        prefWidth="168.0"/>
-                                        <Label layoutX="205.0" layoutY="14.0" text="Подтвредить"/>
-                                        <PasswordField fx:id="rePassword" layoutX="205.0" layoutY="31.0"
+                                        <Label layoutX="205.0" layoutY="6.0" text="Подтвредить"/>
+                                        <PasswordField fx:id="rePassword" layoutX="205.0" layoutY="26.0"
                                                        prefHeight="25.0" prefWidth="168.0"/>
-                                        <Button defaultButton="true" layoutX="407.0" layoutY="31.0"
+                                        <Button defaultButton="true" layoutX="407.0" layoutY="26.0"
                                                 mnemonicParsing="false" onAction="#savePasswordAction" prefHeight="25.0"
                                                 prefWidth="95.0" text="Сохранить"/>
-                                        <Label fx:id="passwordLbl" layoutX="12.0" layoutY="60.0" textFill="#d30f02"/>
+                                        <Label fx:id="passwordLbl" layoutX="11.0" layoutY="54.0" textFill="#d30f02"/>
                                     </children>
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="123.0"
-                                    prefHeight="117.0" prefWidth="518.0" text="Настройка ограничений оператора">
+                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="116.0"
+                                    prefHeight="108.0" prefWidth="518.0" text="Настройка ограничений оператора">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="102.0" prefWidth="516.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="77.0" prefWidth="516.0">
                                     <children>
-                                        <CheckBox fx:id="hideTaskBar" layoutX="14.0" layoutY="14.0"
+                                        <CheckBox fx:id="hideTaskBar" layoutX="14.0" layoutY="6.0"
                                                   mnemonicParsing="false" text="Скрыть панель задач"/>
-                                        <CheckBox fx:id="disableTaskManager" layoutX="170.0" layoutY="14.0"
+                                        <CheckBox fx:id="disableTaskManager" layoutX="170.0" layoutY="6.0"
                                                   mnemonicParsing="false" text="Отключить диспетчер задач"/>
-                                        <CheckBox fx:id="disableKeys" layoutX="14.0" layoutY="44.0"
+                                        <CheckBox fx:id="disableKeys" layoutX="14.0" layoutY="33.0"
                                                   mnemonicParsing="false" text="Отключить Alt+F4/Alt+Tab/Windows"/>
-                                        <Button defaultButton="true" layoutX="407.0" layoutY="58.0"
+                                        <Button defaultButton="true" layoutX="407.0" layoutY="50.0"
                                                 mnemonicParsing="false" onAction="#saveAccessRights" prefHeight="25.0"
                                                 prefWidth="95.0" text="Сохранить"/>
-                                        <Label fx:id="accessRightsLbl" layoutX="14.0" layoutY="70.0"/>
+                                        <Label fx:id="accessRightsLbl" layoutX="11.0" layoutY="54.0"/>
+                                        <CheckBox fx:id="startUp" layoutX="247.0" layoutY="33.0" mnemonicParsing="false"
+                                                  text="Автозагрузка"/>
                                     </children>
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="12.0" layoutY="246.0"
+                        <TitledPane animated="false" collapsible="false" layoutX="12.0" layoutY="232.0"
                                     prefHeight="223.0" prefWidth="522.0" text="Настройка почты">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="232.0" prefWidth="520.0">
@@ -82,8 +84,8 @@
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="13.0" layoutY="478.0"
-                                    prefHeight="75.0" prefWidth="520.0" text="Реклама. Выберите ролик (avi/mp4)">
+                        <TitledPane animated="false" collapsible="false" layoutX="13.0" layoutY="463.0"
+                                    prefHeight="86.0" prefWidth="520.0" text="Реклама. Выберите ролик (avi/mp4)">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="49.0" prefWidth="518.0">
                                     <children>
@@ -94,6 +96,7 @@
                                         <Button defaultButton="true" layoutX="409.0" layoutY="12.0"
                                                 mnemonicParsing="false" onAction="#saveAdsSettings" prefHeight="25.0"
                                                 prefWidth="95.0" text="Сохранить"/>
+                                        <Label fx:id="adsErrorLabel" layoutX="8.0" layoutY="38.0"/>
                                     </children>
                                 </AnchorPane>
                             </content>

@@ -15,13 +15,21 @@ public class Setting {
     private String smtp;
     private String port;
     private String ads;
-
+    private boolean startUp;
 
     public Setting() {
     }
 
     public String getAds() {
         return ads;
+    }
+
+    public boolean isStartUp() {
+        return startUp;
+    }
+
+    public void setStartUp(boolean startUp) {
+        this.startUp = startUp;
     }
 
     public void setAds(String ads) {

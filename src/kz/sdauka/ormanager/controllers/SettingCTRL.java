@@ -1,5 +1,7 @@
 package kz.sdauka.ormanager.controllers;
 
+import com.sun.jna.platform.win32.Advapi32Util;
+import com.sun.jna.platform.win32.WinReg;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,6 +51,8 @@ public class SettingCTRL implements Initializable {
     private CheckBox disableTaskManager;
     @FXML
     private CheckBox disableKeys;
+    @FXML
+    private CheckBox startUp;
     @FXML
     private CheckBox openNotification;
     @FXML
@@ -143,6 +147,8 @@ public class SettingCTRL implements Initializable {
     private Label searchErrorLabel;
     @FXML
     private TextField adsTextField;
+    @FXML
+    private Label adsErrorLabel;
     private FileChooser saveDialog = new FileChooser();
     private Admin admin;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
@@ -181,6 +187,7 @@ public class SettingCTRL implements Initializable {
         hideTaskBar.setSelected(IniFileUtil.getSetting().isHideTaskBar());
         disableTaskManager.setSelected(IniFileUtil.getSetting().isDisableTaskManager());
         disableKeys.setSelected(IniFileUtil.getSetting().isDisableKeys());
+        startUp.setSelected(IniFileUtil.getSetting().isStartUp());
         openNotification.setSelected(IniFileUtil.getSetting().isOpenNotification());
         closeNotification.setSelected(IniFileUtil.getSetting().isCloseNotification());
         emailAdresat.setText(IniFileUtil.getSetting().getEmailAdresat());
@@ -517,6 +524,12 @@ public class SettingCTRL implements Initializable {
         IniFileUtil.setIniFileElement("Access Rights", "hideTaskBar", hideTaskBar.isSelected());
         IniFileUtil.setIniFileElement("Access Rights", "disableTaskManager", disableTaskManager.isSelected());
         IniFileUtil.setIniFileElement("Access Rights", "disableKeys", disableKeys.isSelected());
+        if (startUp.isSelected()) {
+            Advapi32Util.registrySetStringValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "ORGameManager", System.getProperty("user.dir") + "\\ORGameManager.exe");
+        } else {
+            Advapi32Util.registryDeleteValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "ORGameManager");
+        }
+        IniFileUtil.setIniFileElement("Access Rights", "startUp", startUp.isSelected());
         accessRightsLbl.setText("Сохранено");
         accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
         service.schedule(new Runnable() {
@@ -619,9 +632,37 @@ public class SettingCTRL implements Initializable {
     }
 
     public void saveAdsSettings(ActionEvent actionEvent) {
-        if (!adsTextField.getText().isEmpty()) {
+        if (!adsTextField.getText().isEmpty() || adsTextField.getText().equalsIgnoreCase("mp4") || adsTextField.getText().equalsIgnoreCase("avi")) {
             IniFileUtil.setIniFileElement("Ads settings", "ads", adsTextField.getText());
+            adsErrorLabel.setText("Сохранено");
+            adsErrorLabel.setTextFill(Paint.valueOf("#02d63c"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            adsErrorLabel.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        } else {
+            adsErrorLabel.setText("Проверьти правильность пути и расширения файлов (mp4/avi)");
+            adsErrorLabel.setTextFill(Paint.valueOf("#d30f02"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            adsErrorLabel.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
         }
+
     }
 
     private static void configureFileChooserAds(

@@ -28,6 +28,7 @@ public class IniFileUtil {
             wini.put("Access Rights", "hideTaskBar", encryptor.encrypt("true"));
             wini.put("Access Rights", "disableTaskManager", encryptor.encrypt("true"));
             wini.put("Access Rights", "disableKeys", encryptor.encrypt("true"));
+            wini.put("Access Rights", "startUp", encryptor.encrypt("true"));
             wini.put("Email settings", "openNotification", encryptor.encrypt("true"));
             wini.put("Email settings", "closeNotification", encryptor.encrypt("true"));
             wini.put("Email settings", "emailAdresat", encryptor.encrypt("sample@mail.ru"));
@@ -55,6 +56,7 @@ public class IniFileUtil {
             setting1.setHideTaskBar(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "hideTaskBar"))));
             setting1.setDisableTaskManager(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "disableTaskManager"))));
             setting1.setDisableKeys(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "disableKeys"))));
+            setting1.setStartUp(Boolean.parseBoolean(encryptor.decrypt(wini.get("Access Rights", "startUp"))));
             setting1.setOpenNotification(Boolean.parseBoolean(encryptor.decrypt(wini.get("Email settings", "openNotification"))));
             setting1.setCloseNotification(Boolean.parseBoolean(encryptor.decrypt(wini.get("Email settings", "closeNotification"))));
             setting1.setEmailAdresat(encryptor.decrypt(wini.get("Email settings", "emailAdresat")));
