@@ -16,6 +16,7 @@ public class Setting {
     private String port;
     private String ads;
     private boolean startUp;
+    private String obs;
 
     public Setting() {
     }
@@ -26,6 +27,14 @@ public class Setting {
 
     public boolean isStartUp() {
         return startUp;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public void setStartUp(boolean startUp) {

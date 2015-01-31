@@ -28,7 +28,7 @@ public class IniFileUtil {
             wini.put("Access Rights", "hideTaskBar", encryptor.encrypt("true"));
             wini.put("Access Rights", "disableTaskManager", encryptor.encrypt("true"));
             wini.put("Access Rights", "disableKeys", encryptor.encrypt("true"));
-            wini.put("Access Rights", "startUp", encryptor.encrypt("true"));
+            wini.put("Access Rights", "startUp", encryptor.encrypt("false"));
             wini.put("Email settings", "openNotification", encryptor.encrypt("true"));
             wini.put("Email settings", "closeNotification", encryptor.encrypt("true"));
             wini.put("Email settings", "emailAdresat", encryptor.encrypt("sample@mail.ru"));
@@ -37,6 +37,7 @@ public class IniFileUtil {
             wini.put("Email settings", "smtp", encryptor.encrypt("smtp.mail.ru"));
             wini.put("Email settings", "port", encryptor.encrypt("465"));
             wini.put("Ads settings", "ads", encryptor.encrypt(""));
+            wini.put("Obs settings", "obs", encryptor.encrypt(""));
             wini.store();
         } catch (IOException ex) {
             LOG.error(" create ini file is failed", ex);
@@ -65,6 +66,7 @@ public class IniFileUtil {
             setting1.setSmtp(encryptor.decrypt(wini.get("Email settings", "smtp")));
             setting1.setPort(encryptor.decrypt(wini.get("Email settings", "port")));
             setting1.setAds(encryptor.decrypt(wini.get("Ads settings", "ads")));
+            setting1.setObs(encryptor.decrypt(wini.get("Obs settings", "obs")));
         } catch (IOException e) {
             LOG.error(" read ini file is failed", e);
         }

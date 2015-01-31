@@ -8,6 +8,24 @@ import java.util.regex.Pattern;
  */
 public class ValidationUtils {
 
+    public static boolean isAdsExtension(String path) {
+        String file = path.substring(path.lastIndexOf("\\"));
+        String extension = file.substring(file.indexOf("."));
+        return extension.equals(".avi") || extension.equals(".mp4");
+    }
+
+    public static boolean isExe(String path) {
+        String file = path.substring(path.lastIndexOf("\\"));
+        String extension = file.substring(file.indexOf("."));
+        return extension.equals(".exe");
+    }
+
+    public static boolean isImg(String path) {
+        String file = path.substring(path.lastIndexOf("\\"));
+        String extension = file.substring(file.indexOf("."));
+        return extension.equals(".jpg") || extension.equals(".png");
+    }
+
     public static boolean isEmailValid(String email) {
         boolean isEmailValid;
         Matcher emailMatcher;

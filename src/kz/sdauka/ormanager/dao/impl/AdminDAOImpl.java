@@ -4,10 +4,10 @@ import kz.sdauka.ormanager.dao.AdminDAO;
 import kz.sdauka.ormanager.entity.Admin;
 import kz.sdauka.ormanager.utils.HibernateUtil;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
-import javax.swing.*;
 import java.sql.SQLException;
 
 /**
@@ -25,7 +25,7 @@ public class AdminDAOImpl implements AdminDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось обновить пароль", e);
-            JOptionPane.showMessageDialog(null, "Не удалось обновить пароль", "Ошибка обновления данных", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка обновления данных").message("Не удалось обновить пароль").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -46,7 +46,7 @@ public class AdminDAOImpl implements AdminDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось загрузить данные админки", e);
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные админки", "Ошибка загрузки данных ", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные админки").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -65,7 +65,7 @@ public class AdminDAOImpl implements AdminDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось загрузить данные админки", e);
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные админки", "Ошибка обновления данных", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка обновления данных").message("Не удалось загрузить данные админки").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -87,7 +87,7 @@ public class AdminDAOImpl implements AdminDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error("Не удалось загрузить данные админки", e);
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные админки", "Ошибка загрузки данных ", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные админки").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

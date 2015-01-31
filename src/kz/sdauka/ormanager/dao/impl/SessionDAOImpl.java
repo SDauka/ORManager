@@ -5,9 +5,9 @@ import kz.sdauka.ormanager.entity.Session;
 import kz.sdauka.ormanager.entity.SessionDetails;
 import kz.sdauka.ormanager.utils.HibernateUtil;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.hibernate.Query;
 
-import javax.swing.*;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -30,8 +30,8 @@ public class SessionDAOImpl implements SessionDAO {
             sessions = (List<Session>) query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -51,8 +51,8 @@ public class SessionDAOImpl implements SessionDAO {
             sessions = (List<Session>) query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -69,8 +69,8 @@ public class SessionDAOImpl implements SessionDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             sessions = session.createCriteria(Session.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -90,8 +90,8 @@ public class SessionDAOImpl implements SessionDAO {
             sessionDetails = (List<SessionDetails>) query.list();
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Не удалось загрузить данные", "Ошибка загрузки данных'", JOptionPane.OK_OPTION);
             LOG.error("Не удалось загрузить данные " + e);
+            Dialogs.create().title("Ошибка загрузки данных").message("Не удалось загрузить данные").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

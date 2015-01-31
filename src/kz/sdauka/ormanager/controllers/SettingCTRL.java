@@ -1,7 +1,5 @@
 package kz.sdauka.ormanager.controllers;
 
-import com.sun.jna.platform.win32.Advapi32Util;
-import com.sun.jna.platform.win32.WinReg;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,8 +27,7 @@ import kz.sdauka.ormanager.utils.ValidationUtils;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -62,15 +59,15 @@ public class SettingCTRL implements Initializable {
     @FXML
     private TextField emailSender;
     @FXML
-    private TextField emailPassword;
+    private PasswordField emailPassword;
     @FXML
     private TextField smtp;
     @FXML
     private TextField port;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
-    private TextField rePassword;
+    private PasswordField rePassword;
     @FXML
     private Label passwordLbl;
     @FXML
@@ -149,10 +146,15 @@ public class SettingCTRL implements Initializable {
     private TextField adsTextField;
     @FXML
     private Label adsErrorLabel;
+    @FXML
+    private TextField obsPathField;
+    @FXML
+    private Label obsErrorLbl;
     private FileChooser saveDialog = new FileChooser();
     private Admin admin;
     private ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
     private static final Logger LOG = Logger.getLogger(SettingCTRL.class);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         getAdmin();
@@ -196,6 +198,7 @@ public class SettingCTRL implements Initializable {
         smtp.setText(IniFileUtil.getSetting().getSmtp());
         port.setText(IniFileUtil.getSetting().getPort());
         adsTextField.setText(IniFileUtil.getSetting().getAds());
+        obsPathField.setText(IniFileUtil.getSetting().getObs());
         addOperatorBtn.setGraphic(new ImageView("/img/user_add.png"));
         editOperatorBtn.setGraphic(new ImageView("/img/user_edit.png"));
         deleteOperatorBtn.setGraphic(new ImageView("/img/user_remove.png"));
@@ -525,24 +528,65 @@ public class SettingCTRL implements Initializable {
         IniFileUtil.setIniFileElement("Access Rights", "disableTaskManager", disableTaskManager.isSelected());
         IniFileUtil.setIniFileElement("Access Rights", "disableKeys", disableKeys.isSelected());
         if (startUp.isSelected()) {
-            Advapi32Util.registrySetStringValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "ORGameManager", System.getProperty("user.dir") + "\\ORGameManager.exe");
-        } else {
-            Advapi32Util.registryDeleteValue(WinReg.HKEY_CURRENT_USER, "Software\\Microsoft\\Windows\\CurrentVersion\\Run", "ORGameManager");
-        }
-        IniFileUtil.setIniFileElement("Access Rights", "startUp", startUp.isSelected());
-        accessRightsLbl.setText("Сохранено");
-        accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
-        service.schedule(new Runnable() {
-            @Override
-            public void run() {
-                Platform.runLater(new Runnable() {
+            if (new File(System.getProperty("user.dir") + "\\ORGameManager.exe").exists()) {
+                try {
+                    File file = new File("C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\ORGameManager.bat");
+                    PrintWriter writer = new PrintWriter(file.getAbsoluteFile(), "UTF-8");
+                    writer.println("start " + System.getProperty("user.dir") + "\\ORGameManager.exe");
+                    writer.close();
+                    IniFileUtil.setIniFileElement("Access Rights", "startUp", startUp.isSelected());
+                } catch (FileNotFoundException | UnsupportedEncodingException e) {
+                    LOG.error(e);
+                }
+                accessRightsLbl.setText("Сохранено");
+                accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
+                service.schedule(new Runnable() {
                     @Override
                     public void run() {
-                        accessRightsLbl.setText("");
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                accessRightsLbl.setText("");
+                            }
+                        });
                     }
-                });
+                }, 2, TimeUnit.SECONDS);
+            } else {
+                accessRightsLbl.setText("Сохранено все кроме автозагрузки. Не найден Gamemanager");
+                accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
+                service.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                accessRightsLbl.setText("");
+                            }
+                        });
+                    }
+                }, 2, TimeUnit.SECONDS);
             }
-        }, 2, TimeUnit.SECONDS);
+        } else {
+            File lnk = new File("C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\StartUp\\ORGameManager.bat");
+            if (lnk.exists()) {
+                lnk.delete();
+            }
+            IniFileUtil.setIniFileElement("Access Rights", "startUp", startUp.isSelected());
+            accessRightsLbl.setText("Сохранено");
+            accessRightsLbl.setTextFill(Paint.valueOf("#02d63c"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            accessRightsLbl.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        }
+
     }
 
     @FXML
@@ -632,7 +676,7 @@ public class SettingCTRL implements Initializable {
     }
 
     public void saveAdsSettings(ActionEvent actionEvent) {
-        if (!adsTextField.getText().isEmpty() || adsTextField.getText().equalsIgnoreCase("mp4") || adsTextField.getText().equalsIgnoreCase("avi")) {
+        if (ValidationUtils.isAdsExtension(adsTextField.getText())) {
             IniFileUtil.setIniFileElement("Ads settings", "ads", adsTextField.getText());
             adsErrorLabel.setText("Сохранено");
             adsErrorLabel.setTextFill(Paint.valueOf("#02d63c"));
@@ -665,12 +709,63 @@ public class SettingCTRL implements Initializable {
 
     }
 
+
     private static void configureFileChooserAds(
             final FileChooser fileChooser) {
         fileChooser.setTitle("Укажите ролик");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("MP4", "*.mp4"),
-                new FileChooser.ExtensionFilter("AVI", "*.avi")
+                new FileChooser.ExtensionFilter("\"MPEG-4 Moive File (*.mp4)\"", "*.mp4"),
+                new FileChooser.ExtensionFilter("\"AVI Moive File (*.avi)\"", "*.avi")
         );
+    }
+
+    private static void configureFileChooserObs(
+            final FileChooser fileChooser) {
+        fileChooser.setTitle("Укажите файл запуска OBS");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Exe (*.exe)", "*.exe")
+        );
+    }
+
+    public void saveOBSAction(ActionEvent actionEvent) {
+        if (ValidationUtils.isExe(obsPathField.getText())) {
+            IniFileUtil.setIniFileElement("Obs settings", "obs", obsPathField.getText());
+            obsErrorLbl.setText("Сохранено");
+            obsErrorLbl.setTextFill(Paint.valueOf("#02d63c"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            obsErrorLbl.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        } else {
+            obsErrorLbl.setText("Проверьти правильность пути и расширения файла (*.exe)");
+            obsErrorLbl.setTextFill(Paint.valueOf("#d30f02"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            obsErrorLbl.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        }
+    }
+
+    public void handleOBSFileChooser(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        configureFileChooserObs(fileChooser);
+        File file = fileChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
+        if (file != null) {
+            obsPathField.setText(file.getAbsolutePath());
+        }
     }
 }

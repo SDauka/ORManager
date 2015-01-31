@@ -11,7 +11,9 @@ import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kz.sdauka.ormanager.entity.Game;
+import kz.sdauka.ormanager.utils.ValidationUtils;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 
 import java.io.File;
 import java.net.URL;
@@ -105,8 +107,13 @@ public class GamesEditDialogCTRL implements Initializable {
         configureFileChooserIMG(imageChooser);
         File file = imageChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
         if (file != null) {
-            gameImagePath.setText(file.getAbsolutePath());
-        }
+            if (ValidationUtils.isImg(file.getAbsolutePath())) {
+                gameImagePath.setText(file.getAbsolutePath());
+            } else
+                Dialogs.create().title("Ошибка выбора файла").message("Выбранный файл не является допустимым файлом изображения").showError();
+
+        } else
+            Dialogs.create().title("Ошибка выбора файла").message("Выбранный файл не является допустимым файлом изображения").showError();
     }
 
     @FXML
@@ -115,7 +122,8 @@ public class GamesEditDialogCTRL implements Initializable {
         File file = gameChooser.showOpenDialog(((Node) actionEvent.getSource()).getScene().getWindow());
         if (file != null) {
             gamePath.setText(file.getAbsolutePath());
-        }
+        } else
+            Dialogs.create().title("Ошибка выбора файла").message("Выбранный файл не является допустимым файлом исполнения").showError();
     }
 
     private static void configureFileChooserIMG(
@@ -131,13 +139,13 @@ public class GamesEditDialogCTRL implements Initializable {
     private static void configureFileChooserEXE(
             final FileChooser fileChooser) {
         fileChooser.setTitle("Укажите файл запуска игры");
-//        fileChooser.getExtensionFilters().addAll(
-//                new FileChooser.ExtensionFilter("EXE", "*.exe")
-//        );
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("EXE", "*.exe")
+        );
     }
 
     private boolean isValid() {
-        if (gameName.getText().equals("") || gamePath.getText().equals("") || gameTime.getText().equals("") || gameImagePath.getText().equals("") || gameCost.getText().equals("")) {
+        if (gameName.getText().isEmpty() || gamePath.getText().isEmpty() || gameTime.getText().isEmpty() || gameImagePath.getText().isEmpty() || gameCost.getText().isEmpty()) {
             errorLabel.setText("Заполните все поля");
             errorLabel.setTextFill(Paint.valueOf("#d30f02"));
             service.schedule(new Runnable() {

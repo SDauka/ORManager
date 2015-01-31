@@ -4,9 +4,9 @@ import kz.sdauka.ormanager.dao.OperatorsDAO;
 import kz.sdauka.ormanager.entity.Operator;
 import kz.sdauka.ormanager.utils.HibernateUtil;
 import org.apache.log4j.Logger;
+import org.controlsfx.dialog.Dialogs;
 import org.hibernate.Session;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             operators = session.createCriteria(Operator.class).list();
         } catch (Exception e) {
             LOG.error(e);
-            JOptionPane.showMessageDialog(null, "Ошибка загрузки данных операторов", "Ошибка загрузки данных", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка загрузки данных").message("Ошибка загрузки данных операторов").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -44,7 +44,7 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error(e);
-            JOptionPane.showMessageDialog(null, "Ошибка добавления оператора", "Ошибка при вставке", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка при вставке").message("Ошибка добавления оператора").showError();
         } finally {
             if (session != null && session.isOpen()) {
 
@@ -63,7 +63,7 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error(e);
-            JOptionPane.showMessageDialog(null, "Ошибка обновления данных оператора", "Ошибка при вставке", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка при вставке").message("Ошибка обновления данных оператора").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -81,7 +81,7 @@ public class OperatorsDAOImpl implements OperatorsDAO {
             session.getTransaction().commit();
         } catch (Exception e) {
             LOG.error(e);
-            JOptionPane.showMessageDialog(null, "Ошбика удаления оператора", "Ошибка при удалении", JOptionPane.OK_OPTION);
+            Dialogs.create().title("Ошибка при удалении").message("Ошбика удаления оператора").showError();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
