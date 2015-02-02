@@ -9,19 +9,11 @@ import java.util.regex.Pattern;
 public class ValidationUtils {
 
     public static boolean isAdsExtension(String path) {
-        if (path == null || path.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(path == null || path.isEmpty());
     }
 
     public static boolean isExe(String path) {
-        if (path == null || path.isEmpty()) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(path == null || path.isEmpty());
 
     }
 
