@@ -47,7 +47,11 @@ public class SettingCTRL implements Initializable {
     @FXML
     private CheckBox disableTaskManager;
     @FXML
-    private CheckBox disableKeys;
+    private CheckBox disableWin;
+    @FXML
+    private CheckBox disableAltTab;
+    @FXML
+    private CheckBox disableAltF4;
     @FXML
     private CheckBox startUp;
     @FXML
@@ -191,7 +195,9 @@ public class SettingCTRL implements Initializable {
         password.setText(admin.getPassword());
         hideTaskBar.setSelected(IniFileUtil.getSetting().isHideTaskBar());
         disableTaskManager.setSelected(IniFileUtil.getSetting().isDisableTaskManager());
-        disableKeys.setSelected(IniFileUtil.getSetting().isDisableKeys());
+        disableWin.setSelected(IniFileUtil.getSetting().isDisableWin());
+        disableAltTab.setSelected(IniFileUtil.getSetting().isDisableAltTab());
+        disableAltF4.setSelected(IniFileUtil.getSetting().isDisableAltF4());
         startUp.setSelected(IniFileUtil.getSetting().isStartUp());
         openNotification.setSelected(IniFileUtil.getSetting().isOpenNotification());
         closeNotification.setSelected(IniFileUtil.getSetting().isCloseNotification());
@@ -529,7 +535,9 @@ public class SettingCTRL implements Initializable {
     private void saveAccessRights(ActionEvent actionEvent) {
         IniFileUtil.setIniFileElement("Access Rights", "hideTaskBar", hideTaskBar.isSelected());
         IniFileUtil.setIniFileElement("Access Rights", "disableTaskManager", disableTaskManager.isSelected());
-        IniFileUtil.setIniFileElement("Access Rights", "disableKeys", disableKeys.isSelected());
+        IniFileUtil.setIniFileElement("Access Rights", "disableWin", disableWin.isSelected());
+        IniFileUtil.setIniFileElement("Access Rights", "disableAltF4", disableAltF4.isSelected());
+        IniFileUtil.setIniFileElement("Access Rights", "disableAltTab", disableAltTab.isSelected());
         if (startUp.isSelected()) {
             if (new File(System.getProperty("user.dir") + "\\ORGameManager.exe").exists()) {
                 try {

@@ -55,7 +55,6 @@ public class LoginCTRL implements Initializable {
                 stage.setTitle("Настройки");
                 stage.setScene(new Scene(root));
                 stage.getIcons().add(new Image("/img/icon.png"));
-
                 stage.show();
                 stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override
