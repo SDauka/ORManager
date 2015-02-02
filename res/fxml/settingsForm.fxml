@@ -228,10 +228,12 @@
                                     <children>
                                         <TableView fx:id="sessionDetailsTable" prefHeight="199.0" prefWidth="546.0">
                                             <columns>
-                                                <TableColumn fx:id="sessionDetailsID" prefWidth="46.0" text="ID"/>
-                                                <TableColumn fx:id="sessionDetailStartTime" prefWidth="237.0"
+                                                <TableColumn fx:id="sessionDetailsID" prefWidth="30.0" text="ID"/>
+                                                <TableColumn fx:id="sessionDetailStartTime" prefWidth="157.0"
                                                              text="Время начала"/>
-                                                <TableColumn fx:id="sessionDetailsGameName" prefWidth="259.0"
+                                                <TableColumn fx:id="sessionDetailsWorkTime" minWidth="0.0"
+                                                             prefWidth="132.0" text="Продолжительность"/>
+                                                <TableColumn fx:id="sessionDetailsGameName" prefWidth="220.0"
                                                              text="Название игры"/>
                                             </columns>
                                         </TableView>

@@ -137,6 +137,8 @@ public class SettingCTRL implements Initializable {
     @FXML
     private TableColumn<SessionDetails, String> sessionDetailsGameName;
     @FXML
+    private TableColumn<SessionDetails, String> sessionDetailsWorkTime;
+    @FXML
     private DatePicker firstPeriod;
     @FXML
     private DatePicker secondPeriod;
@@ -183,6 +185,7 @@ public class SettingCTRL implements Initializable {
         //таблица с подробностью сессии
         sessionDetailsID.setCellValueFactory(new PropertyValueFactory<SessionDetails, Integer>("id"));
         sessionDetailStartTime.setCellValueFactory(new PropertyValueFactory<SessionDetails, Timestamp>("startTime"));
+        sessionDetailsWorkTime.setCellValueFactory(new PropertyValueFactory<SessionDetails, String>("workTime"));
         sessionDetailsGameName.setCellValueFactory(new PropertyValueFactory<SessionDetails, String>("gameName"));
         //other
         password.setText(admin.getPassword());
