@@ -85,16 +85,59 @@ public class GamesEditDialogCTRL implements Initializable {
 
     @FXML
     public void handleOK(ActionEvent actionEvent) {
-        if (isValid()) {
-            game.setName(gameName.getText());
-            game.setPath(gamePath.getText());
-            game.setImage(gameImagePath.getText());
-            game.setAttribute(gameAttribute.getText());
-            game.setTime(Integer.parseInt(gameTime.getText()));
-            game.setCost(Integer.parseInt(gameCost.getText()));
-            okClicked = true;
-            dialogStage.close();
+
+        if (gameName.getText() == null || gamePath.getText() == null || gameTime.getText() == null || gameImagePath.getText() == null || gameCost.getText() == null) {
+            errorLabel.setText("Заполните все поля");
+            errorLabel.setTextFill(Paint.valueOf("#d30f02"));
+            service.schedule(new Runnable() {
+                @Override
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            errorLabel.setText("");
+                        }
+                    });
+                }
+            }, 2, TimeUnit.SECONDS);
+        } else {
+            if (gameCost.getText().matches("^[0-9]+$") && gameTime.getText().matches("^[0-9]+$")) {
+                game.setName(gameName.getText());
+                game.setPath(gamePath.getText());
+                game.setImage(gameImagePath.getText());
+                game.setAttribute(gameAttribute.getText());
+                game.setTime(Integer.parseInt(gameTime.getText()));
+                game.setCost(Integer.parseInt(gameCost.getText()));
+                okClicked = true;
+                dialogStage.close();
+            } else {
+                errorLabel.setText("время/цена должны быть цифры");
+                errorLabel.setTextFill(Paint.valueOf("#d30f02"));
+                service.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                errorLabel.setText("");
+                            }
+                        });
+                    }
+                }, 2, TimeUnit.SECONDS);
+
+            }
+
         }
+//        if (isValid()) {
+//            game.setName(gameName.getText());
+//            game.setPath(gamePath.getText());
+//            game.setImage(gameImagePath.getText());
+//            game.setAttribute(gameAttribute.getText());
+//            game.setTime(Integer.parseInt(gameTime.getText()));
+//            game.setCost(Integer.parseInt(gameCost.getText()));
+//            okClicked = true;
+//            dialogStage.close();
+//        }
     }
 
     @FXML

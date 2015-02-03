@@ -30,27 +30,31 @@
                             </content>
                         </TitledPane>
                         <TitledPane animated="false" collapsible="false" layoutX="16.0" layoutY="129.0"
-                                    prefHeight="109.0" prefWidth="518.0" text="Настройка ограничений оператора">
+                                    prefHeight="118.0" prefWidth="518.0" text="Настройка ограничений оператора">
                             <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="83.0" prefWidth="441.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="95.0" prefWidth="516.0">
                                     <children>
                                         <CheckBox fx:id="hideTaskBar" layoutX="14.0" layoutY="6.0"
                                                   mnemonicParsing="false" text="Скрыть панель задач"/>
                                         <CheckBox fx:id="disableTaskManager" layoutX="170.0" layoutY="6.0"
                                                   mnemonicParsing="false" text="Отключить диспетчер задач"/>
-                                        <CheckBox fx:id="disableKeys" layoutX="14.0" layoutY="33.0"
-                                                  mnemonicParsing="false" text="Отключить Alt+F4/Alt+Tab/Windows"/>
-                                        <Button defaultButton="true" layoutX="407.0" layoutY="50.0"
+                                        <CheckBox fx:id="disableAltTab" layoutX="14.0" layoutY="33.0"
+                                                  mnemonicParsing="false" text="Отключить Alt+Tab"/>
+                                        <Button defaultButton="true" layoutX="407.0" layoutY="63.0"
                                                 mnemonicParsing="false" onAction="#saveAccessRights" prefHeight="25.0"
                                                 prefWidth="95.0" text="Сохранить"/>
-                                        <Label fx:id="accessRightsLbl" layoutX="11.0" layoutY="54.0"/>
-                                        <CheckBox fx:id="startUp" layoutX="247.0" layoutY="33.0" mnemonicParsing="false"
+                                        <Label fx:id="accessRightsLbl" layoutX="11.0" layoutY="67.0"/>
+                                        <CheckBox fx:id="startUp" layoutX="360.0" layoutY="6.0" mnemonicParsing="false"
                                                   text="Автозагрузка"/>
+                                        <CheckBox fx:id="disableAltF4" layoutX="170.0" layoutY="33.0"
+                                                  mnemonicParsing="false" text="Отключить Alt+F4"/>
+                                        <CheckBox fx:id="disableWin" layoutX="360.0" layoutY="33.0"
+                                                  mnemonicParsing="false" text="Отключить Windows"/>
                                     </children>
                                 </AnchorPane>
                             </content>
                         </TitledPane>
-                        <TitledPane animated="false" collapsible="false" layoutX="14.0" layoutY="247.0"
+                        <TitledPane animated="false" collapsible="false" layoutX="15.0" layoutY="258.0"
                                     prefHeight="240.0" prefWidth="522.0" text="Настройка почты">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="232.0" prefWidth="520.0">

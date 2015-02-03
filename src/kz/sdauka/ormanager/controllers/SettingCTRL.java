@@ -236,22 +236,12 @@ public class SettingCTRL implements Initializable {
 
     public void searchByDate(ActionEvent actionEvent) {
         if (firstPeriod.getValue() == null && secondPeriod.getValue() == null) {
-            searchErrorLabel.setText("Выберите даты с-по...");
-            searchErrorLabel.setTextFill(Paint.valueOf("#d30f02"));
-            service.schedule(new Runnable() {
-                @Override
-                public void run() {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            searchErrorLabel.setText("");
-                        }
-                    });
-                }
-            }, 2, TimeUnit.SECONDS);
-        } else if (firstPeriod.getValue() != null && secondPeriod.getValue() == null) {
+            sessionTable.setItems(getAllSession());
+        }
+        if (firstPeriod.getValue() != null && secondPeriod.getValue() == null) {
             sessionTable.setItems(getSessionsByDate(Date.valueOf(firstPeriod.getValue())));
-        } else {
+        }
+        if (firstPeriod.getValue() != null && secondPeriod.getValue() != null) {
             sessionTable.setItems(getSessionsByDates(Date.valueOf(firstPeriod.getValue()), Date.valueOf(secondPeriod.getValue())));
         }
     }
